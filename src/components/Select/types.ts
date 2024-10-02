@@ -17,4 +17,5 @@ export interface SelectProps
   label?: string;
   helperText?: string;
   error?: boolean;
+  maxVisibleOptions?: number
 }

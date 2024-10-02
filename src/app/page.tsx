@@ -18,12 +18,9 @@ export default function Home() {
             label: 'value 3',
             value: '3'
           },
-          {
-            label: 'value 4',
-            value: '4'
-          }
 
         ]}
+        value="1"
       />
       </main>
     </div>
