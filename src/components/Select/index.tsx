@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Option, SelectProps } from "./types";
-import { sortOptionsByLabel } from "@/utils";
+import { moveSelectedToFront, sortOptionsByLabel } from "@/utils";
 
 const OPTION_HEIGHT = 40; // Height of each option in pixels
 
@@ -26,6 +26,7 @@ const Select: React.FC<SelectProps> = ({
 }) => {
   const [selectedValue, setSelectedValue] = useState<Option | undefined>();
   const [sortedOptions, setSortedOptions] = useState<Option[]>([]);
+  const [renderedOptions, setRenderedOptions] = useState<Option[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Calculate the maximum height for the dropdown menu based on the number of visible options
@@ -39,12 +40,16 @@ const Select: React.FC<SelectProps> = ({
    */
   const handleSelectChange = (option: Option) => { 
     setSelectedValue(option);
+
+    const updatedOptions = moveSelectedToFront(sortedOptions, option);
+    setRenderedOptions(updatedOptions);
   };
 
   useEffect(() => {
     // Order the options
     const initialSortedOptions = sortOptionsByLabel(options);
     setSortedOptions(initialSortedOptions);
+    setRenderedOptions(initialSortedOptions);
 
     // Set the selected value when the value prop is provider
     if (value) {
@@ -76,20 +81,19 @@ const Select: React.FC<SelectProps> = ({
       </div>
 
       {isMenuOpen && (
-        <ul
-          className="flex flex-col absolute w-full p-2 gap-1 mt-1 rounded shadow-md bg-white overflow-y-auto"
-          style={{ maxHeight }}
-        >
-          {sortedOptions.map((option) => (
-            <li
-              key={option.value}
-              className="px-2 py-1 cursor-default hover:font-medium"
-              onClick={() => {handleSelectChange(option); setIsMenuOpen(false)}}
-            >
-              {option.icon && option.icon} {option.label}
-            </li>
-          ))}
-        </ul>
+        <div className="flex flex-col absolute w-full p-2 gap-1 mt-1 rounded shadow-md bg-white overflow-y-auto">
+          <ul style={{ maxHeight }}>
+            {renderedOptions.map((option) => (
+              <li
+                key={option.value}
+                className="px-2 py-1 cursor-default hover:font-medium"
+                onClick={() => {handleSelectChange(option); setIsMenuOpen(false)}}
+              >
+                {option.icon && option.icon} {option.label}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </fieldset>
   );
