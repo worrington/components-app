@@ -6,30 +6,10 @@ export default function Home() {
       <main className="">
         <Select label='Seleccionar'
         options={[
-          {
-            label: 'value 2',
-            value: '2',
-          },
-          {
-            label: 'value 3',
-            value: '3',
-          },
-          {
-            label: 'value 1',
-            value: '1'
-          },
-          {
-            label: 'value 4',
-            value: '4'
-          },
-          {
-            label: 'value 6',
-            value: '6'
-          },
-          {
-            label: 'value 5',
-            value: '5'
-          },
+          { value: '1', label: 'Montserrat Delgado', icon: {name: "UserCircleIcon"} },
+          { value: '2', label: 'Guillermo Chiw', icon: {name: "UserCircleIcon"} },
+          { value: '3', label: 'Dayra Coronado', icon: {name: "UserCircleIcon"} },
+          { value: '4', label: 'Alejandro Alvarez', icon: {name: "UserCircleIcon"} },
         ]}
       />
       </main>

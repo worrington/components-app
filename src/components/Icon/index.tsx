@@ -3,7 +3,6 @@ import * as HeroIconsOutline from '@heroicons/react/24/outline';
 import * as HeroIconsSolid from '@heroicons/react/24/solid';
 import { IconProps } from './types';
 
-
 /**
  * `Icon` is a reusable React component that renders an icon from the 
  * `@heroicons/react` library. This component allows for customization 

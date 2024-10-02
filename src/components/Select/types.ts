@@ -1,4 +1,5 @@
 import React from "react";
+import { IconProps } from "../Icon/types";
 
 /**
  * Option: Represents a selectable option in the Select component.
@@ -9,7 +10,7 @@ export interface Option {
   /** The unique value associated with the option. */
   value: string;
   /** Optional icon to be displayed next to the label. */
-  icon?: React.ReactElement | string;
+  icon?: IconProps;
 }
 
 /**

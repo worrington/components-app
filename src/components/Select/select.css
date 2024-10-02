@@ -75,8 +75,11 @@ input {
   @apply items-center;
   @apply px-2;
   @apply py-1;
+}
+
+.drop-down li:hover span {
   @apply cursor-default;
-  @apply hover:font-medium;
+  @apply font-semibold;
 }
 
 .drop-down span {
