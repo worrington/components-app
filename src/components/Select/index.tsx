@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Option, SelectProps } from "./types";
 import { moveSelectedToFront, sortOptionsByLabel } from "@/utils";
+import Icon from "../Icon";
 
 const OPTION_HEIGHT = 40; // Height of each option in pixels
 
@@ -92,7 +93,8 @@ const Select: React.FC<SelectProps> = ({
                 <span className="flex items-center gap-2">
                   { option.icon && option.icon}
                   {option.label}
-                </span>
+                </span> 
+                {selectedOption === option && <Icon name="CheckIcon"/>}
               </li>
             ))}
           </ul>
