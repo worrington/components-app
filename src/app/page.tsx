@@ -1,3 +1,4 @@
+import Icon from "@/components/Icon";
 import Select from "@/components/Select";
 
 export default function Home() {
@@ -8,11 +9,11 @@ export default function Home() {
         options={[
           {
             label: 'value 2',
-            value: '2'
+            value: '2',
           },
           {
             label: 'value 3',
-            value: '3'
+            value: '3',
           },
           {
             label: 'value 1',

@@ -24,7 +24,7 @@ const Select: React.FC<SelectProps> = ({
   maxVisibleOptions = 3, 
   ...rest 
 }) => {
-  const [selectedValue, setSelectedValue] = useState<Option | undefined>();
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>();
   const [sortedOptions, setSortedOptions] = useState<Option[]>([]);
   const [renderedOptions, setRenderedOptions] = useState<Option[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,7 +39,7 @@ const Select: React.FC<SelectProps> = ({
    * @param {Option} option - The selected option object.
    */
   const handleSelectChange = (option: Option) => { 
-    setSelectedValue(option);
+    setSelectedOption(option);
 
     const updatedOptions = moveSelectedToFront(sortedOptions, option);
     setRenderedOptions(updatedOptions);
@@ -54,7 +54,7 @@ const Select: React.FC<SelectProps> = ({
     // Set the selected value when the value prop is provider
     if (value) {
       const selectedOption = options.find((option) => option.value === value);
-      setSelectedValue(selectedOption);
+      setSelectedOption(selectedOption);
     }
   }, [options, value]);
 
@@ -63,8 +63,8 @@ const Select: React.FC<SelectProps> = ({
       <label
         htmlFor={rest?.id || "select-input"}
         className={`absolute left-2 transition-all duration-300 ease-in-out label text-gray-500
-        ${selectedValue || isMenuOpen ? "text-xs -top-[8px] bg-white px-1" : "text-base top-2"}`}
-        data-shrink={selectedValue?.value}
+        ${selectedOption || isMenuOpen ? "text-xs -top-[8px] bg-white px-1" : "text-base top-2"}`}
+        data-shrink={selectedOption?.value}
       >
         {label}
       </label>
@@ -73,7 +73,7 @@ const Select: React.FC<SelectProps> = ({
         <input
           {...rest}
           id={rest?.id || "select-input"}
-          value={selectedValue?.label || ""}
+          value={selectedOption?.label || ""}
           className="w-full py-2 px-4 border border-gray-300 rounded hover:shadow-md hover:cursor-pointer focus:outline-none focus:border-[#164E63] focus:border-1"
           onClick={() => setIsMenuOpen((prev) => !prev)}
           readOnly
@@ -86,10 +86,13 @@ const Select: React.FC<SelectProps> = ({
             {renderedOptions.map((option) => (
               <li
                 key={option.value}
-                className="px-2 py-1 cursor-default hover:font-medium"
+                className="flex justify-between items-center px-2 py-1 cursor-default hover:font-medium"
                 onClick={() => {handleSelectChange(option); setIsMenuOpen(false)}}
               >
-                {option.icon && option.icon} {option.label}
+                <span className="flex items-center gap-2">
+                  { option.icon && option.icon}
+                  {option.label}
+                </span>
               </li>
             ))}
           </ul>

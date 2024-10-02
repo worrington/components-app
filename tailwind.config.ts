@@ -8,7 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+      },
       colors: {
+        primary: "#0E7490",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
