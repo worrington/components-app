@@ -13,6 +13,9 @@ const config: Config = {
       },
       colors: {
         primary: "#0E7490",
+        light: "#F7F7F7",
+        slateGray: "#6B7280",
+        deepTeal: "#164E63",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },

@@ -19,6 +19,18 @@ export default function Home() {
             label: 'value 1',
             value: '1'
           },
+          {
+            label: 'value 4',
+            value: '4'
+          },
+          {
+            label: 'value 6',
+            value: '6'
+          },
+          {
+            label: 'value 5',
+            value: '5'
+          },
         ]}
       />
       </main>

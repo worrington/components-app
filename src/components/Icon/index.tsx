@@ -12,7 +12,7 @@ import { IconProps } from './types';
 const Icon: React.FC<IconProps> = ({
 	name,
 	className = '',
-	color = "primary",
+	color = "light",
 	width = 16,
 	height = 16,
 	variant = "outline",

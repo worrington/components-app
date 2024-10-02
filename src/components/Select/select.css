@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 4px; 
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-light;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary;
+  border-radius: 2px;
+}
+
+label {
+  @apply absolute;
+  @apply left-2;
+  @apply px-1;
+  @apply transition-all;
+  @apply duration-300;
+  @apply ease-in-out;
+  @apply text-slateGray;
+}
+
+.select {
+  @apply flex;
+  @apply items-center;
+}
+
+.select span {
+  @apply absolute;
+  @apply right-2;
+  @apply text-slateGray;
+}
+
+input {
+  @apply w-full;
+  @apply py-2;
+  @apply px-4;
+  @apply rounded;
+  @apply border;
+  @apply border-gray-300;
+  @apply rounded;
+  @apply focus:outline-none;
+  @apply focus:border-deepTeal;
+  @apply focus:border;
+  @apply hover:shadow-md;
+  @apply hover:cursor-pointer; 
+}
+
+.drop-down {
+  @apply flex;
+  @apply flex-col;
+  @apply absolute;
+  @apply w-full;
+  @apply p-2;
+  @apply gap-1;
+  @apply mt-1;
+  @apply rounded;
+  @apply shadow-md;
+  @apply bg-white;
+}
+
+.drop-down ul {
+  @apply overflow-y-auto;
+}
+
+.drop-down li {
+  @apply flex;
+  @apply justify-between;
+  @apply items-center;
+  @apply px-2;
+  @apply py-1;
+  @apply cursor-default;
+  @apply hover:font-medium;
+}
+
+.drop-down span {
+  @apply flex;
+  @apply items-center;
+  @apply gap-2;
+}

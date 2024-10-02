@@ -1,23 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Option, SelectProps } from "./types";
+import { DropdownProps, InputProps, LabelProps, Option, SelectProps } from "./types";
 import { moveSelectedToFront, sortOptionsByLabel } from "@/utils";
 import Icon from "../Icon";
+import "./select.css";
 
-const OPTION_HEIGHT = 40; // Height of each option in pixels
+const OPTION_HEIGHT = 38; 
 
-
-/**
- * Select component that displays a list of options, allowing the user to select one.
- * 
- * @param {string} label - The label for the select input.
- * @param {Option[]} options - Array of options for the dropdown menu.
- * @param {string | number} value - The selected value (controlled component).
- * @param {number} maxVisibleOptions - Maximum number of options to show before scrolling.
- * @param {object} rest - Additional props passed to the input element.
- * 
- * @returns {JSX.Element} A styled select input with options displayed in a dropdown menu.
- */
 const Select: React.FC<SelectProps> = ({ 
   label, 
   options, 
@@ -25,82 +14,113 @@ const Select: React.FC<SelectProps> = ({
   maxVisibleOptions = 3, 
   ...rest 
 }) => {
+  const sortedOptions = sortOptionsByLabel(options);
+
   const [selectedOption, setSelectedOption] = useState<Option | undefined>();
-  const [sortedOptions, setSortedOptions] = useState<Option[]>([]);
-  const [renderedOptions, setRenderedOptions] = useState<Option[]>([]);
+  const [renderedOptions, setRenderedOptions] = useState<Option[]>(sortedOptions);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Calculate the maximum height for the dropdown menu based on the number of visible options
-  const maxHeight = maxVisibleOptions * OPTION_HEIGHT;
-
-  /**
-   * Handles the selection of an option from the dropdown.
-   * Updates the selected value and closes the menu.
-   * 
-   * @param {Option} option - The selected option object.
-   */
-  const handleSelectChange = (option: Option) => { 
-    setSelectedOption(option);
-
-    const updatedOptions = moveSelectedToFront(sortedOptions, option);
-    setRenderedOptions(updatedOptions);
-  };
-
   useEffect(() => {
-    // Order the options
-    const initialSortedOptions = sortOptionsByLabel(options);
-    setSortedOptions(initialSortedOptions);
-    setRenderedOptions(initialSortedOptions);
-
-    // Set the selected value when the value prop is provider
     if (value) {
-      const selectedOption = options.find((option) => option.value === value);
-      setSelectedOption(selectedOption);
+      const selected = options.find((option) => option.value === value);
+      setSelectedOption(selected);
     }
   }, [options, value]);
 
+  const handleSelectChange = (option: Option) => {
+    const newOrderOptions = moveSelectedToFront(sortedOptions, option);
+
+    setSelectedOption(option);
+    setRenderedOptions(newOrderOptions);
+    
+    setTimeout(() => {
+      setIsMenuOpen(false);
+    }, 400);
+  };
+
   return (
     <fieldset className="relative">
-      <label
+      <Label
         htmlFor={rest?.id || "select-input"}
-        className={`absolute left-2 transition-all duration-300 ease-in-out label text-gray-500
-        ${selectedOption || isMenuOpen ? "text-xs -top-[8px] bg-white px-1" : "text-base top-2"}`}
-        data-shrink={selectedOption?.value}
-      >
-        {label}
-      </label>
+        label={label || ""}
+        isActive={!!selectedOption || isMenuOpen}
+        required={rest?.required}
+      />
+      
+      <Input 
+        {...rest} 
+        id={rest?.id || "select-input"} 
+        value={selectedOption?.label || ""} 
+        onClick={() => setIsMenuOpen((prev) => !prev)}
+        isFocus={isMenuOpen}
+      />
 
-      <div>
-        <input
-          {...rest}
-          id={rest?.id || "select-input"}
-          value={selectedOption?.label || ""}
-          className="w-full py-2 px-4 border border-gray-300 rounded hover:shadow-md hover:cursor-pointer focus:outline-none focus:border-[#164E63] focus:border-1"
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          readOnly
+      {isMenuOpen &&
+        <Dropdown
+          options={renderedOptions}
+          onOptionSelect={handleSelectChange}
+          maxVisibleOptions={maxVisibleOptions}
+          selectedOption={selectedOption}
         />
-      </div>
-
-      {isMenuOpen && (
-        <div className="flex flex-col absolute w-full p-2 gap-1 mt-1 rounded shadow-md bg-white overflow-y-auto">
-          <ul style={{ maxHeight }}>
-            {renderedOptions.map((option) => (
-              <li
-                key={option.value}
-                className="flex justify-between items-center px-2 py-1 cursor-default hover:font-medium"
-                onClick={() => {handleSelectChange(option); setIsMenuOpen(false)}}
-              >
-                <span className="flex items-center gap-2">
-                  { option.icon && option.icon}
-                  {option.label}
-                </span> 
-                {selectedOption === option && <Icon name="CheckIcon"/>}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      }
     </fieldset>
+  );
+};
+
+const Label: React.FC<LabelProps> = ({ htmlFor, label, isActive, required }) => (
+  <label
+    htmlFor={htmlFor}
+    className={`${isActive ? "text-xs -top-[8px] bg-white" : "text-base top-2"}`}
+    data-shrink={isActive}
+  >
+    {required && "*"}
+    {label}
+  </label>
+);
+
+const Input: React.FC<InputProps> = ({ id, value, isFocus, onClick, ...rest }) => (
+  <div className="select" onClick={onClick}>
+    <input
+      {...rest}
+      id={id}
+      value={value}
+      readOnly
+      className={`${isFocus && "border-deepTeal"}`}
+    />
+    <span>
+      <Icon name="ChevronDownIcon" height={20} width={20} />
+    </span>
+  </div>
+);
+
+const Dropdown: React.FC<DropdownProps> = ({
+  options,
+  selectedOption,
+  maxVisibleOptions,
+  onOptionSelect
+}) => {
+  const maxHeight = maxVisibleOptions * OPTION_HEIGHT;
+
+  return (
+    <div className="drop-down" style={{ maxHeight }}>
+      <ul>
+        {options.map((option) => (
+          <li
+            key={option.value}
+            onClick={() => onOptionSelect(option)}
+          >
+            <span>
+              {option.icon && option.icon}
+              {option.label}
+            </span>
+
+            {selectedOption === option && (
+              <Icon name="CheckIcon" color="primary"/>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
