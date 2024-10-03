@@ -25,6 +25,8 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLInputElement
   helperText?: string;
   /** Maximum number of options visible without scrolling. */
   maxVisibleOptions?: number;
+  /** */
+  isSearched?: boolean;
 }
 
 /**
@@ -51,6 +53,8 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   onClick: () => void;
   /** Indicates if the input is currently focused/open. */
   isFocus: boolean;
+   /** */
+  isSearched?: boolean;
 }
 
 /**

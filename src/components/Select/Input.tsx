@@ -10,13 +10,14 @@ import { InputProps } from "./types";
    * @param onClick - A callback function that opens the dropdown menu.
    * @param rest - Additional input props (e.g., placeholder, disabled).
    */
-export const Input: React.FC<InputProps> = ({ id, value, isFocus, onClick, ...rest }) => (
+export const Input: React.FC<InputProps> = ({ id, value, isFocus, isSearched=false, onClick, ...rest }) => (
   <div className="select" onClick={onClick}>
     <input
       {...rest}
+      autoComplete="off"
       id={id}
       value={value}
-      readOnly
+      readOnly={!isSearched}
       className={`${isFocus && "border-deepTeal"}`}
     />
     <span>

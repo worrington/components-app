@@ -23,7 +23,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div className="drop-down" style={{ maxHeight }}>
       <ul>
-        {options.map((option) => (
+        {options.length > 0 ? options.map((option) => (
           <li
             key={option.value}
             onClick={() => onOptionSelect(option)}
@@ -39,7 +39,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
               <Icon name="CheckIcon" color="primary"/>
             )}
           </li>
-        ))}
+        )):
+        <li>No options found</li>
+        }
       </ul>
     </div>
   );
