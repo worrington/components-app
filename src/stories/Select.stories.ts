@@ -40,6 +40,10 @@ const meta: Meta<typeof Select> = {
       action: 'changed',
       description: 'Callback fired when the user selects an option.',
     },
+    isSearched: {
+      control: 'boolean',
+      description: 'Indicates whether the input field is in a searched state.',
+    }
   },
 };
 
@@ -95,5 +99,14 @@ export const MaxVisibleOptions: Story = {
       label: `Option ${i + 1}`,
     })),
     maxVisibleOptions: 4,
+  }
+};
+
+// Represents a select with search input
+export const SelectWithSearch: Story = {
+  args: {
+    label: 'Select a value',
+    options: optionsWithIcons,
+    isSearched: true,
   }
 };

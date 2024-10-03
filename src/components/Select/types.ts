@@ -25,7 +25,7 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLInputElement
   helperText?: string;
   /** Maximum number of options visible without scrolling. */
   maxVisibleOptions?: number;
-  /** */
+  /** Indicates whether the input field is in a searched state. */
   isSearched?: boolean;
 }
 
@@ -53,7 +53,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   onClick: () => void;
   /** Indicates if the input is currently focused/open. */
   isFocus: boolean;
-   /** */
+  /** Indicates whether the input field is in a searched state. */
   isSearched?: boolean;
 }
 

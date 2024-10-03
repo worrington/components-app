@@ -21,57 +21,64 @@ const Select: React.FC<SelectProps> = ({
   maxVisibleOptions = 3,
   ...rest
 }) => {
-  // Sort options only once on initialization
+  // Sort options on initialization
   const sortedOptions = sortOptionsByLabel(options);
 
   // State management
   const [selectedOption, setSelectedOption] = useState<Option | undefined>();
-  const [filteredOptionsList, setFilteredOptionsList] = useState<Option[]>(sortedOptions);
+  const [optionsList, setOptionsList] = useState<Option[]>(sortedOptions);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-  const [prevSelectedOption, setPrevSelectedOption] = useState<Option | undefined>();
+  const [previousSelectedOption, setPreviousSelectedOption] = useState<Option | undefined>();
 
   // Handle option selection
   const handleOptionSelect = (option: Option) => {
     const reorderedOptions = moveSelectedToFront(sortedOptions, option);
+    setOptionsList(reorderedOptions);
     setSelectedOption(option);
-    setFilteredOptionsList(reorderedOptions);
-    setIsDropdownOpen(false); // Close the dropdown
-    setPrevSelectedOption(option); // Store the previous selection
+    setPreviousSelectedOption(option);
+    setIsDropdownOpen(false);
   };
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const term = e.target.value;
+    const searchTerm = e.target.value;
 
+    // Update the selected option with the search term
     if (!selectedOption) {
-      setPrevSelectedOption(selectedOption); // Save the previous selected option
+      setPreviousSelectedOption(selectedOption);
     }
 
-    setSelectedOption({ value: "", label: term });
+    setSelectedOption({ value: "", label: searchTerm });
 
-    // Update the displayed options based on the search term
-    const filtered = filteredOptions(sortedOptions, term);
-    setFilteredOptionsList(filtered);
+    // Update options based on the search term
+    const filtered = filteredOptions(sortedOptions, searchTerm);
+    setOptionsList(filtered);
 
-    if (!isDropdownOpen && term.length > 0) {
-      setIsDropdownOpen(true); // Open the dropdown if searching
+    if (!isDropdownOpen && searchTerm.length > 0) {
+      setIsDropdownOpen(true);
     }
   };
 
   // Sync the selected option with the value prop
   useEffect(() => {
     if (value) {
-      const selected = options.find((option) => option.value === value);
-      setSelectedOption(selected);
+      const foundOption = options.find((option) => option.value === value);
+      setSelectedOption(foundOption);
     }
   }, [options, value]);
 
   // Reset search term when dropdown closes without a valid selection
   useEffect(() => {
     if (!isDropdownOpen && selectedOption?.value === "") {
-      setSelectedOption(prevSelectedOption); // Revert to previous selection
+      setSelectedOption(previousSelectedOption);
+
+      const reorderedOptions = previousSelectedOption
+        ? moveSelectedToFront(sortedOptions, previousSelectedOption)
+        : sortedOptions;
+
+      setOptionsList(reorderedOptions);
     }
-  }, [isDropdownOpen, prevSelectedOption]);
+  }, [isDropdownOpen, previousSelectedOption]);
 
   return (
     <fieldset className="relative">
@@ -94,7 +101,7 @@ const Select: React.FC<SelectProps> = ({
 
       {isDropdownOpen && (
         <Dropdown
-          options={filteredOptionsList}
+          options={optionsList}
           onOptionSelect={handleOptionSelect}
           maxVisibleOptions={maxVisibleOptions}
           selectedOption={selectedOption}

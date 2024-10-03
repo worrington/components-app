@@ -55,7 +55,23 @@ export const moveSelectedToFront = (options: Option[], selectedValue: Option): O
 };
 
 
-
+/**
+ * Filters an array of options based on a search term.
+ *
+ * @param {Option[]} options - An array of options to filter. Each option should have a `label` property.
+ * @param {string} searchTerm - The term to search for within the option labels.
+ * @returns {Option[]} An array of options that match the search term (case-insensitive).
+ *
+ * @example
+ * const options = [
+ *   { value: "1", label: "Apple" },
+ *   { value: "2", label: "Banana" },
+ *   { value: "3", label: "Cherry" }
+ * ];
+ *
+ * const result = filteredOptions(options, "ap");
+ * console.log(result); // [{ value: "1", label: "Apple" }]
+ */
 export const filteredOptions = (options: Option[], searchTerm: string) => {
   return options.filter(option =>
     option.label.toLowerCase().includes(searchTerm.toLowerCase())
