@@ -1,36 +1,154 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Component Library
+
+Welcome to the **Lightwood's Component Library**! 🎉
+
+This project is a collection of reusable components designed for easy integration into your Next.js applications. My goal is to provide a simple way to create a consistent user interface while saving development time.
 
 ## Getting Started
-
-First, run the development server:
+You can install the library using npm:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+    npm install lightwood-components-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## npm
+To get started with the Component Library, follow these steps:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+    npm i lightwood-components-app
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# `Select` Component
 
-## Learn More
+## Description
 
-To learn more about Next.js, take a look at the following resources:
+The `Select` component is a custom dropdown selection component that displays a label, an input field with the selected option, and a dropdown of selectable options.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Props
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The component accepts the following properties (`props`):
 
-## Deploy on Vercel
+| Prop             | Type               | Description                                                                                       |
+|------------------|--------------------|---------------------------------------------------------------------------------------------------|
+| `label`          | `string`           | The label displayed next to the select field.                                                    |
+| `options`        | `Option[]`         | A list of available options to select from. Each option must have a `value` and a `label`.      |
+| `value`          | `string`           | The value of the selected option.                                                                 |
+| `isSearched`     | `boolean`          | Indicates if a search is being performed.                                                        |
+| `maxVisibleOptions`| `number`         | The maximum number of options displayed in the dropdown menu (default value: 3).                 |
+| `...rest`        | `HTMLInputElement` | Any other properties that will be passed to the input component.                                   |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Example Usage
+
+Below is an example of how to use the `Select` component in your React application:
+
+```tsx
+import React from 'react';
+import Select from 'components-app/Select';
+
+const options = [
+  { value: '1', label: 'Option 1' },
+  { value: '2', label: 'Option 2' },
+  { value: '3', label: 'Option 3' },
+];
+
+function App() {
+  return (
+    <div>
+      <Select 
+        label="Select an option"
+        options={options}
+        value="1"
+        isSearched={false}
+        maxVisibleOptions={5}
+      />
+    </div>
+  );
+}
+```
+
+Read more [here](https://clever-caramel-a20070.netlify.app/?path=/docs/components-select--docs)
+
+### Component Functionality
+
+1. **Initialization**: The component sorts the options on initialization using the `sortOptionsByLabel` function.
+2. **Option Selection**: When a user selects an option from the dropdown menu, the `selectedOption` state is updated, and the options are reordered using `moveSelectedToFront`.
+3. **Search**: The input field allows users to search for options. When the text in the field changes, the options are filtered using the `filteredOptions` function, and the list of displayed options is updated.
+4. **Synchronization**: The component syncs with the received `value` prop to maintain the correct state of the selected option.
+5. **Interaction**: Clicking on the input field will toggle the dropdown menu open or closed.
+
+
+### GitHub
+
+To get started with the Component Library, follow these steps:
+
+1. **Clone the repository**:
+```bash
+   git clone https://github.com/worrington/components-app
+   cd component-library
+```
+
+Install dependencies:
+
+```bash
+    npm install
+```
+
+Run the development server:
+
+```bash
+    npm run dev
+```
+Open your browser and navigate to http://localhost:3000 to see your components in action!
+
+Available Components
+
+1. Select Component
+The Select component allows users to choose an option from a dropdown list. It is designed to be customizable and easy to use. Here’s a simple example of how to use it:
+
+```tsx
+import Select from '@/components/Select';
+
+const MyComponent = () => {
+  return (
+    <Select
+      options={[
+        { value: 'option1', label: 'Option 1' },
+        { value: 'option2', label: 'Option 2' },
+      ]}
+      placeholder="Select an option"
+    />
+  );
+};
+```
+2. Icon Component
+The Icon component provides a set of scalable icons that you can easily integrate into your projects. Here’s how to use it:
+
+```tsx
+import Icon from '@/components/Icon';
+
+const MyComponent = () => {
+  return <Icon name="home" size={24} />;
+};
+```
+
+3. Run Storybook
+To view and interact with the UI components in Storybook, run:
+
+```bash
+    npm run storybook
+```
+
+Storybook will be available at `bashhttp://localhost:6006.`
+
+Styles
+This project uses Tailwind CSS for styling. Feel free to customize the Tailwind configuration to match your design needs.
+
+Contributing
+Contributions are welcome! If you have suggestions for new components or improvements, feel free to open an issue or submit a pull request.
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Happy coding! 🚀

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "outDir": "dist",
+      "declaration": true,
+      "target": "ES5",
+      "module": "ES6",
+      "jsx": "react",
+      "esModuleInterop": true
+    },
+    "include": ["src/components/**/*"]
+  }
+  

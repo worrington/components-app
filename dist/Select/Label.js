@@ -1,6 +1,3 @@
-import React from 'react';
-import { LabelProps } from "./types";
-
 /**
  * Label Component: Renders a label for the input field and changes its position and size based on focus.
  *
@@ -9,14 +6,9 @@ import { LabelProps } from "./types";
  * @param isActive - Whether the input field is active (focused or has a value).
  * @param required - Whether the field is required.
  */
-export const Label: React.FC<LabelProps> = ({ htmlFor, label, isActive, required }) => (
-  <label
-    htmlFor={htmlFor}
-    className={`${isActive ? "text-xs -top-[8px] bg-white" : "text-base top-2"}`}
-    data-shrink={isActive}
-  >
-    {required && "*"}
-    {label}
-  </label>
-);
-  
+export var Label = function (_a) {
+    var htmlFor = _a.htmlFor, label = _a.label, isActive = _a.isActive, required = _a.required;
+    return (React.createElement("label", { htmlFor: htmlFor, className: "".concat(isActive ? "text-xs -top-[8px] bg-white" : "text-base top-2"), "data-shrink": isActive },
+        required && "*",
+        label));
+};
