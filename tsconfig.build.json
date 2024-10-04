@@ -7,6 +7,6 @@
       "jsx": "react",
       "esModuleInterop": true
     },
-    "include": ["src/components/**/*"]
+    "include": ["src/components/**/*", "src/utils/**/*"]
   }
   
