@@ -45,7 +45,7 @@ Below is an example of how to use the `Select` component in your React applicati
 
 ```tsx
 import React from 'react';
-import Select from 'components-app/Select';
+import Select from 'lightwood-components-app/Select';
 
 const options = [
   { value: '1', label: 'Option 1' },
