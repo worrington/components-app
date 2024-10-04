@@ -14,6 +14,7 @@ export default function Home() {
             { value: '6', label: 'Mariana Cornejo', icon: {name: "UserCircleIcon"} },
           ]}
           isSearched
+          helperText="Example helper Text"
         />
       </main>
     </div>

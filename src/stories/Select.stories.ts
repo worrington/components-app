@@ -70,6 +70,7 @@ export const Default: StoryObj<typeof Select> = {
   args: {
     label: 'Select an option',
     options,
+    helperText: "Example helper Text",
   },
 }
 
@@ -79,6 +80,7 @@ export const WithSelectedValue: Story = {
     label: 'Select an option',
     options,
     value: 'option2',
+    helperText: "Example helper Text",
   }
 };
 
@@ -87,6 +89,7 @@ export const WithIcons: Story = {
   args: {
     label: 'Select an option',
     options: optionsWithIcons,
+    helperText: "Example helper Text",
   }
 };
 
@@ -99,6 +102,7 @@ export const MaxVisibleOptions: Story = {
       label: `Option ${i + 1}`,
     })),
     maxVisibleOptions: 4,
+    helperText: "Example helper Text",
   }
 };
 
@@ -108,5 +112,6 @@ export const SelectWithSearch: Story = {
     label: 'Select a value',
     options: optionsWithIcons,
     isSearched: true,
+    helperText: "Example helper Text",
   }
 };

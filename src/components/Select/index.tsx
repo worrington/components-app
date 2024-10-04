@@ -18,6 +18,7 @@ const Select: React.FC<SelectProps> = ({
   options,
   value,
   isSearched,
+  helperText,
   maxVisibleOptions = 3,
   ...rest
 }) => {
@@ -98,6 +99,8 @@ const Select: React.FC<SelectProps> = ({
         isSearched={isSearched}
         onChange={handleSearchChange}
       />
+      
+      
 
       {isDropdownOpen && (
         <Dropdown
@@ -107,6 +110,12 @@ const Select: React.FC<SelectProps> = ({
           selectedOption={selectedOption}
         />
       )}
+
+      {helperText &&
+        <span className="text-slateGray text-xs top-1">
+          {helperText}
+        </span>
+      }
     </fieldset>
   );
 };
