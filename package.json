@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "private": false,
   "main": "dist/components/index.js",
+  "types": "dist/components/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
